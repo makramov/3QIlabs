@@ -56,3 +56,4 @@ Then(/^User successfully logged out$/) do
   @browser.element(:xpath, "//h1[@id='logInPanelHeading']")
   @browser.quit
 end
+  
