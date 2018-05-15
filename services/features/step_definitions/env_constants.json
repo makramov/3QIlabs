@@ -1,0 +1,93 @@
+{
+  "verify_ssl": false, // set the ssl to be verified or not
+  "request_timeout":60, //# of seconds to wait for the response from the server
+  //Params that apply to all the environments
+  "log_limit":10000, // limits applied to response body and headers and capture params in the log
+ // "trim_values_limit": [500, 10], // optionaly remove string values that are longer than this many charachters from the request/response. For better report view. Specify the length of value to tring and the leng to keep
+
+  //Params that apply to all the environments
+  "common_params":{
+	"campaignStatus": "Active"
+  },
+  //Params that are used for specific environment. Environment name must match the key
+    "env_params": {
+    "DEV": {
+      "authorization": "Basic YWRtaW46cGFzc3dvcmQ="
+    },
+    "prod": {
+      "authorization": "Basic YWRtaW46cGFzc3dvcmQ="
+    }
+  },
+
+  //Urls for each environment.  the key in the excel will be replaced with url when it matches with the key here.
+  // Environment name must match the key
+ 
+  "env_urls": {
+    "DEV": {
+      "account": "https://young-citadel-48504.herokuapp.com/",
+      "task": "https://young-citadel-48504.herokuapp.com/",
+      "campaign": "https://young-citadel-48504.herokuapp.com/",
+      "lead": "https://young-citadel-48504.herokuapp.com/",
+      "contact": "https://young-citadel-48504.herokuapp.com/",
+      "opportunity": "https://young-citadel-48504.herokuapp.com/"
+    },
+    "prod": {
+      "account": "https://quiet-refuge-3333.herokuapp.com/",
+      "task": "https://quiet-refuge-3333.herokuapp.com/",
+      "campaign": "https://quiet-refuge-3333.herokuapp.com/",
+      "lead": "https://quiet-refuge-3333.herokuapp.com/",
+      "contact": "https://quiet-refuge-3333.herokuapp.com/",
+      "opportunity": "https://quiet-refuge-3333.herokuapp.com/"
+    }
+  },
+  // list of keys that will be searched in the response body/headers and captured in the test params.
+  // use only if you don't know where the element will come in the response,
+  // otherwise use capture_paths to capture element values
+ 
+   "capture_params": [
+    "date", "id"
+  ],
+
+
+  // key is the value you come up with to name what you are capturing.
+  //The path is the array specifying the tree in the json response. strings for keys and integers for arrays.
+  "capture_paths": {
+	"petId":["petList",0,"id", "integer"], //optionally specify to convert value to integer
+	"petName":["petList",0,"name"],
+	//"ID":["campaign","id"],
+	"referenceID":["responseBody"],
+	"CAPTURED_VALUE":["headers", "x-forwarded-port"],
+	"CAPTURED_COOKIE":["set-cookie"],
+    "DUE_AT": ["task","due_at"],
+	"TASK-NAME": ["task","name"],
+	"CATEGORY": ["task","category"],
+	"TASK_ID": ["task","id"],
+	"ACCOUNT_ID": ["account","id"],
+	"LEAD_ID": ["lead","id"]
+  },
+
+  //specify proxy if you are blocked by your corporate policies and getting ssl issues
+  "proxy":{
+	"url": null, //default
+	"DEV": "http://proxy.mycompany.com" //environment based
+  },
+
+  //Customly created list of validation keys to be validated. Can be inserted in the expected response/headers and
+  //validation rules are defined in custom_functions_api.rb file in the validate_special_value function.
+  "validation_keys": [
+	"ANYTHING",
+	"NOTHING",
+	"STRING",
+	"INTEGER",
+	"INTEGER_POSITIVE",
+	"STRING_NUMERIC",
+	"STRING_NUMERIC_POSITIVE",
+	"CURRENT_UTC",
+	"DATE_TIME"
+//	"DATE_TIME_OR_NULL",
+//	"STRING_OR_NULL",
+//	"DT_FULL_YEAR_TIME_ZONE",
+//	"DATE_TIME_Y_l",
+//	"DATE_TIME_Y"
+  ]
+}
